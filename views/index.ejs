@@ -1,55 +1,65 @@
 <%- include("partials/header.ejs") %>
-
-<h1>THINGS TO DO</h1>
-
-<form action="/" method="POST">
-  <input type="text" name="listItem" placeholder="Add to your list" required/>
-  <input type="image" src="images/check-mark.png" alt="Submit" height="30px" />
-</form>
-
-<% if (locals.items) { %> <% items.forEach((i) => { %>
-<div id= <%= i %>>
-  <% if (i === locals.editItem){ %>
-   <form action="/" method="POST">
-      <input type="text" name="editItem" value=<%= i %> required/>
-      <input type="hidden" name="originalItem" value=<%= i %> />
-      <input type="image" src="images/check-mark.png" alt="Submit" height="30px" />
-   </form>
-   <form action="/delete" method="POST">
-      <button><img src="images/trash-can.png" alt="delete" height="30px" /></button>
-      <input type="hidden" value=<%= i %> name="itemDeleted"/>
-    </form>
-    <form action="/close" method="POST">
-      <button><img src="images/cross.png" alt="edit" height="30px" /></button>
-      <input type="hidden" value=<%= i %> name="itemEditedClosed"/>
-    </form>
-  <% } else { %>
-    <form action="/checked" method="POST">
-      <input  type="checkbox" name="checkbox" value=<%=i%> onChange="this.form.submit()"  id=<%=i%> />
-    </form>
-    <p><%= i %></p>
-    <form action="/delete" method="POST">
-      <button><img src="images/trash-can.png" alt="delete" height="30px" /></button>
-      <input type="hidden" value=<%= i %> name="itemDeleted"/>
-    </form>
-    <form action="/edit" method="POST">
-      <button><img src="images/pencil.png" alt="edit" height="30px" /></button>
-      <input type="hidden" value=<%= i %> name="itemEdited"/>
-    </form>
-   <%  } %>
-  <% }); %>
-</div>
-<% if(locals.checked) {%>
-  <h1>DONE!</h1>
-  <% checked.forEach((j) => { %>
-  <div id= <%= j %>>
-    <form action="/checked" method="POST">
-      <input disabled="true" checked="true" type="checkbox" name="checkbox" value=<%=j%> onChange="this.form.submit()"  id=<%=j%> />
-    </form>
-    <p><%= j %></p>
+<div class="row">
+  <div class="col-sm-4 mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">THINGS TO DO</h5>
+        <form action="/" method="POST">
+          <input type="text" name="listItem" placeholder="Add to your list" required/>
+          <input type="image" src="images/check-mark.png" alt="Submit" height="30px" />
+        </form>
+        <% if (locals.items) { %> <% items.forEach((i) => { %>
+          <div id= <%= i %>>
+            <% if (i === locals.editItem){ %>
+             <form action="/" method="POST">
+                <input type="text" name="editItem" value=<%= i %> required/>
+                <input type="hidden" name="originalItem" value=<%= i %> />
+                <input type="image" src="images/check-mark.png" alt="Submit" height="30px" />
+             </form>
+             <form action="/delete" method="POST">
+                <button><img src="images/trash-can.png" alt="delete" height="30px" /></button>
+                <input type="hidden" value=<%= i %> name="itemDeleted"/>
+              </form>
+              <form action="/close" method="POST">
+                <button><img src="images/cross.png" alt="edit" height="30px" /></button>
+                <input type="hidden" value=<%= i %> name="itemEditedClosed"/>
+              </form>
+            <% } else { %>
+              <form action="/checked" method="POST">
+                <input  type="checkbox" name="checkbox" value=<%=i%> onChange="this.form.submit()"  id=<%=i%> />
+              </form>
+              <p><%= i %></p>
+              <form action="/delete" method="POST">
+                <button><img src="images/trash-can.png" alt="delete" height="30px" /></button>
+                <input type="hidden" value=<%= i %> name="itemDeleted"/>
+              </form>
+              <form action="/edit" method="POST">
+                <button><img src="images/pencil.png" alt="edit" height="30px" /></button>
+                <input type="hidden" value=<%= i %> name="itemEdited"/>
+             </form>
+           <%  } %>
+          <% }); %>  
+        <% } %>
+      </div>
+    </div>
   </div>
- <% }); %>
-<% } %>
-<% } %>
-
+  
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">DONE!</h5>
+        <% if(locals.checked) {%>
+          <% checked.forEach((j) => { %>
+          <div id= <%= j %>>
+            <form action="/checked" method="POST">
+              <input disabled="true" checked="true" type="checkbox" name="checkbox" value=<%=j%> onChange="this.form.submit()"  id=<%=j%> />
+            </form>
+            <p><%= j %></p>
+          </div>
+         <% }); %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
 <%- include("partials/footer.ejs") %>
